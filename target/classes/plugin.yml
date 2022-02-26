@@ -1,0 +1,11 @@
+name: HarderSurvival
+version: 1.0-SNAPSHOT
+main: me.moob.hardersurvival.Main
+api-version: 1.16
+authors: [ moob ]
+description: a mod that makes survival harder, mobs stronger, and food less good
+commands:
+  customtag:
+    description: modifies custom tags
+    usage: /<command> <player> <tag key> [int|byte] <value>
+    permission: HarderSurvival.CustomTag

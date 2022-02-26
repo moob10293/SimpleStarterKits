@@ -1,0 +1,15 @@
+me/moob/hardersurvival/Methods.class
+me/moob/hardersurvival/FileWriteRead.class
+me/moob/hardersurvival/PlayerSpawnEvent.class
+me/moob/hardersurvival/MobDamageEvent.class
+me/moob/hardersurvival/DamageEvent.class
+me/moob/hardersurvival/BlockEvent.class
+me/moob/hardersurvival/FoodEvent.class
+me/moob/hardersurvival/Chance.class
+me/moob/hardersurvival/MobSpawnEvent.class
+me/moob/hardersurvival/Spawn.class
+me/moob/hardersurvival/Main$1.class
+me/moob/hardersurvival/OnTick.class
+me/moob/hardersurvival/Settings.class
+me/moob/hardersurvival/CommandCustomTag.class
+me/moob/hardersurvival/Main.class

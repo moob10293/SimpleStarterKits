@@ -1,0 +1,6 @@
+name: Starterkits
+version: $project.version}
+main: me.noob.starterkits.Main
+api-version: 1.18
+authors: [ noob ]
+description: a starter kit plugin
