@@ -23,10 +23,12 @@ public class PlayerSpawnEvent implements Listener {
     public void playerSpawnEvent(PlayerJoinEvent event) {
         List<Map<?, ?>> configMapList = config.getMapList("starterkit");
         Player player = event.getPlayer();
+        player.sendMessage("hilo");
         if (!player.hasPlayedBefore()) {
             for (Map<?,?> map: configMapList){
                 giveItem(player, Material.matchMaterial((String) map.get("material")), (int) map.get("amount"));
             }
+            player.sendMessage("helo");
         }
     }
 
