@@ -10,6 +10,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        this.saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(this.getConfig()), this);
     }
     @Override
