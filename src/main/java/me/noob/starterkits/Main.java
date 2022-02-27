@@ -10,9 +10,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        World world = getServer().getWorlds().get(0);
-
-        getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(this.getConfig()), this);
     }
     @Override
     public void onDisable() {

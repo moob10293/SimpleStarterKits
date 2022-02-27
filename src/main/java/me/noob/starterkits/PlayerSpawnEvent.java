@@ -1,32 +1,37 @@
-package me.moob.hardersurvival;
+package me.noob.starterkits;
 
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Map;
 
 public class PlayerSpawnEvent implements Listener {
 
-    Plugin plugin;
+    Configuration config;
 
-    PlayerSpawnEvent(Plugin plugin) {
-        this.plugin = plugin;
+    PlayerSpawnEvent(Configuration config) {
+        this.config = config;
     }
 
     @EventHandler
     public void playerSpawnEvent(PlayerJoinEvent event) {
-        event.getplayer'
-        if (player.get) {
-            Player player = event.getPlayer();
-            giveItem(player, Material.OAK_LOG, 32);
-            giveItem(player, Material.COBBLESTONE, 64);
-            giveItem(player, Material.COAL, 8);
-            giveItem(player, Material.BREAD, 64);
-            player.sendMessage("here you go");
+        List<Map<?, ?>> configMapList = config.getMapList("starterkit");
+        Player player = event.getPlayer();
+        if (!player.hasPlayedBefore()) {
+            for (Map<?,?> map: configMapList){
+                giveItem(player, Material.matchMaterial((String) map.get("material")), (int) map.get("amount"));
+            }
+        }
+    }
+
+    private void giveItem(Player player, Material material, int amount){
+        ItemStack itemStack = new ItemStack(material,amount);
+        player.getInventory().addItem(itemStack);
+    }
+}
