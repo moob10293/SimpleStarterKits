@@ -1,4 +1,4 @@
-package me.noob.starterkits;
+package me.noob.simplestarterkits;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
