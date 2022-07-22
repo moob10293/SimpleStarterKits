@@ -1,6 +1,11 @@
-name: Starterkits
+name: SimpleStarterKits
 version: $project.version}
-main: me.noob.starterkits.Main
+main: me.noob.SimpleStarterKits.Main
 api-version: 1.18
 authors: [ noob ]
-description: a starter kit plugin
+description: An easy to use starter kit plugin.
+commands:
+  SimpleStarterKits:
+    description: The main command for the SimpleStarterKits plugin. Use /simplestarterkits help for more information
+    usage:
+    permission: SimpleStarterKits.simplestarterkits
