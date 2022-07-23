@@ -2,7 +2,7 @@ package me.noob.simplestarterkits;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin {
+public class SimpleStarterKits extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
