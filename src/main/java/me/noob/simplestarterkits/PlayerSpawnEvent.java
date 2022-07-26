@@ -1,4 +1,4 @@
-package me.noob.starterkits;
+package me.noob.simplestarterkits;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
@@ -21,17 +21,16 @@ public class PlayerSpawnEvent implements Listener {
 
     @EventHandler
     public void playerSpawnEvent(PlayerJoinEvent event) {
-        List<Map<?, ?>> configMapList = config.getMapList("starterkit");
+        List<Map<?, ?>> mapList = config.getMapList("starterkit");
         Player player = event.getPlayer();
         if (!player.hasPlayedBefore()) {
-            for (Map<?,?> map: configMapList){
+            for (Map<?,?> map: mapList){
                 giveItem(player, Material.matchMaterial((String) map.get("material")), (int) map.get("amount"));
             }
         }
     }
 
     private void giveItem(Player player, Material material, int amount){
-        ItemStack itemStack = new ItemStack(material,amount);
-        player.getInventory().addItem(itemStack);
+        player.getInventory().addItem(new ItemStack(material,amount));
     }
 }
