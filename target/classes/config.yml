@@ -1,7 +1,0 @@
-starterkit:
-  - material: oak_log
-    amount: 16
-  - material: cobblestone
-    amount: 64
-  - material: bread
-    amount: 16
