@@ -30,7 +30,7 @@ public class PlayerSpawnEvent implements Listener {
         }
     }
 
-    private void giveItem(Player player, Material material, int amount){
+    private static void giveItem(Player player, Material material, int amount){
         player.getInventory().addItem(new ItemStack(material,amount));
     }
 }

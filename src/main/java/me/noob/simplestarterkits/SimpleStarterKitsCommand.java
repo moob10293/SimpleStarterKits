@@ -37,6 +37,7 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
                     } else if (args.length == 3) {
                         world = sender.getServer().getWorld(args[2]);
                     } else {
+
                         sender.sendMessage("Wrong number of arguments!");
                         return false;
                     }
