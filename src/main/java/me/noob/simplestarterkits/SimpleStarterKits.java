@@ -10,15 +10,12 @@ import java.util.logging.Logger;
 
 public class SimpleStarterKits extends JavaPlugin {
     @Getter
-    private static Logger logger;
-    @Getter
     private static SimpleStarterKits instance;
     @Getter
     private FileConfiguration config;
 
     private void initializeVariables() {
         instance = this;
-        logger = SimpleStarterKits.getLogger();
         instance.saveDefaultConfig();
         config = this.getConfig();
     }

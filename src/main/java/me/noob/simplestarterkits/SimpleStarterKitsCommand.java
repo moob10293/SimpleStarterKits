@@ -17,7 +17,7 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         givekit [player] [(optional)world], which gives you the kit for the world specified or the one you are in if there is none,
         reload [config|kits], which reloads the config/kits (NOTE: you do NOT have to use this if you edited the kits using a command,
         help, which tells you this info, and about, which tells you about this plugin*/
-        Logger logger = SimpleStarterKits.getLogger();
+        Logger logger = SimpleStarterKits.getInstance().getLogger();
         if (args.length > 0) {
             if (sender.hasPermission("simplestarterkits.command")) {
                 if (args[0].equalsIgnoreCase("savekit")) {
