@@ -13,15 +13,10 @@ import java.util.Map;
 
 public class PlayerSpawnEvent implements Listener {
 
-    Configuration config;
-
-    PlayerSpawnEvent(Configuration config) {
-        this.config = config;
-    }
 
     @EventHandler
     public void playerSpawnEvent(PlayerJoinEvent event) {
-        List<Map<?, ?>> mapList = config.getMapList("starterkit");
+        List<Map<?, ?>> mapList = SimpleStarterKits.getInstance().getSettings().getMapList("starterkit");
         Player player = event.getPlayer();
         if (!player.hasPlayedBefore()) {
             for (Map<?,?> map: mapList){
