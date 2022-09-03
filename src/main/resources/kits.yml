@@ -1,0 +1,35 @@
+starter:
+  - ==: org.bukkit.inventory.ItemStack
+    type: LOG
+    damage: 2
+  - null
+  - ==: org.bukkit.inventory.ItemStack
+    type: STONE
+    damage: 1
+  - null
+  - ==: org.bukkit.inventory.ItemStack
+    type: LAPIS_BLOCK
+  - null
+  - null
+  - null
+  - null
+  - null
+  - ==: org.bukkit.inventory.ItemStack
+    type: STONE
+  - null
+  - null
+  - null
+  - null
+  - null
+  - null
+  - null
+  - null
+  - null
+  - null
+  - ==: org.bukkit.inventory.ItemStack
+    type: WOOD
+  - null
+  - null
+  - null
+  - null
+  - null
