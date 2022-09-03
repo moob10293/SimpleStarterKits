@@ -42,8 +42,10 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
                     if (player == null) return false;
                     SimpleStarterKits.getInstance().giveKit(player, "starter");
                 }
+            }else {
+                sender.sendMessage("You do not have permission to use this command.");//place in config
+                return false;
             }
-            sender.sendMessage("You do not have permission to use this command.");//place in config
         }
         return true;
     }
