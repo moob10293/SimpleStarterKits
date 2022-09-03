@@ -10,8 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Logger;
 
-import static me.noob.simplestarterkits.SimpleStarterKits.giveKit;
-
 public class SimpleStarterKitsCommand implements CommandExecutor {
 
     @Override
@@ -26,28 +24,28 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("savekit")) {
                     Player player = getPlayer(sender, logger);
                     if (player == null) return false;
-                    World world;
+                    String kit;
 
-                    if (args.length == 2) {//args.length isn't args[x]
-                        world = player.getWorld();
-                    } else if (args.length == 3) {
-                        world = sender.getServer().getWorld(args[2]);
+                    if (args.length == 1) {//just savekit
+                        kit = "starter";
+                    } else if (args.length == 2) {
+                        kit = args[1];
                     } else {
-
                         sender.sendMessage("Wrong number of arguments!");
                         return false;
                     }
-                    return saveKit(player, world);
+
+                    SimpleStarterKits.getInstance().saveKit(player,kit);
                 } else if (args[0].equalsIgnoreCase("givekit")) {
 
                     Player player = getPlayer(sender, logger);
                     if (player == null) return false;
-                    giveKit(player, SimpleStarterKits.getStarterKit());
+                    SimpleStarterKits.getInstance().giveKit(player, "starter");
                 }
             }
             sender.sendMessage("You do not have permission to use this command.");//place in config
         }
-        return false;
+        return true;
     }
 
 
@@ -64,11 +62,6 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
             return null;
         }
         return player;
-    }
-
-    private boolean saveKit(Player sender, World world) {
-        //get the player's inventory, save it to a Kit, and put it in the kits file
-        return true;
     }
 }
 

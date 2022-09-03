@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -13,13 +14,14 @@ public final class SimpleStarterKits extends JavaPlugin {
     @Getter
     private static SimpleStarterKits instance;
     @Getter
-    private static List<ItemStack> starterKit;
+    private List<ItemStack> starterKit;
     @Getter
     private YamlConfiguration kitsConfig;
 
-    public static void giveKit(Player player, List<ItemStack> kit) {
+    public void giveKit(Player player, String kit) {
+        PlayerInventory inventory = (PlayerInventory) kitsConfig.get("kit");
         int index = 0;
-        for (ItemStack itemStack : kit) {
+        for (ItemStack itemStack : inventory) {
             if (itemStack != null) {
                 player.getInventory().setItem(index, itemStack);
             }
@@ -27,18 +29,23 @@ public final class SimpleStarterKits extends JavaPlugin {
         }
     }
 
+    public void saveKit(Player player, String kit){
+        kitsConfig.set(kit,player.getInventory());
+    }
+
     @Override
     public void onEnable() {
         getLogger().info("Enabling SimpleStarterKits...");
         instance = this;
         createConfigs();
+        initStarterKit();
         getCommand("simplestarterkits").setExecutor(new SimpleStarterKitsCommand());
         getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
 
     }
 
     private void createConfigs() {
-        this.saveDefaultConfig();
+        saveDefaultConfig();
         File kitsFile = new File(getDataFolder(), "kits.yml");
         saveResource("kits.yml", false);
         kitsConfig = YamlConfiguration.loadConfiguration(kitsFile);
