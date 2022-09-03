@@ -3,6 +3,7 @@ package me.noob.simplestarterkits;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,7 +18,17 @@ public class SimpleStarterKits extends JavaPlugin {
     @Getter
     private YamlConfiguration kitsConfig;
     @Getter
-    private List<ItemStack> starterKit;
+    private static List<ItemStack> starterKit;
+
+    @Override
+    public void onEnable() {
+        getLogger().info("Enabling SimpleStarterKits...");
+        instance = this;
+        createConfigs();
+        getCommand("simplestarterkits").setExecutor(new SimpleStarterKitsCommand());
+        getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
+
+    }
 
     private void createConfigs() {
         File kitsFile = new File(getDataFolder(), "kits.yml");
@@ -31,10 +42,10 @@ public class SimpleStarterKits extends JavaPlugin {
     }
     private void initStarterKit() {
         try {
-            starterKit = (List<ItemStack>) kitsConfig.get(config.getString("FirstJoinKit"));
+            starterKit = (List<ItemStack>) kitsConfig.get(config.getString("first-join-kit"));
         } catch (ClassCastException e) {
             e.printStackTrace();
-            this.getLogger().info("StarterKit in kits.yml could not be cast to an List<ItemStack>!");
+            this.getLogger().info("Kit 'starter' in kits.yml could not be cast to an List<ItemStack>!");
         }
     }
     @Override
@@ -43,7 +54,14 @@ public class SimpleStarterKits extends JavaPlugin {
         instance = this;
         createConfigs();
 
-        getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
+    public static void giveKit(Player player, List<ItemStack> kit) {
+        int index = 0;
+        for (ItemStack itemStack: kit){
+            if (itemStack != null) {
+                player.getInventory().setItem(index,itemStack);
+            }
+            index++;
+        }
     }
     @Override
     public void onDisable() {

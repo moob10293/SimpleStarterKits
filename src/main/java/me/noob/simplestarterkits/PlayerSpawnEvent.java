@@ -11,21 +11,14 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import java.util.Map;
 
+import static me.noob.simplestarterkits.SimpleStarterKits.giveKit;
+
 public class PlayerSpawnEvent implements Listener {
 
 
     @EventHandler
     public void playerSpawnEvent(PlayerJoinEvent event) {
-        List<ItemStack> firstJoinKit= SimpleStarterKits.getInstance().getStarterKit();
         Player player = event.getPlayer();
-        if (!player.hasPlayedBefore()) {
-            int index = 0;
-            for (ItemStack itemStack: firstJoinKit){
-                if (itemStack != null) {
-                    player.getInventory().setItem(index,itemStack);
-                }
-                index++;
-            }
-        }
+        giveKit(player, SimpleStarterKits.getStarterKit());
     }
 }

@@ -5,9 +5,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.logging.Logger;
+
+import static me.noob.simplestarterkits.SimpleStarterKits.giveKit;
 
 public class SimpleStarterKitsCommand implements CommandExecutor {
 
@@ -21,19 +26,12 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         if (args.length > 0) {
             if (sender.hasPermission("simplestarterkits.command")) {
                 if (args[0].equalsIgnoreCase("savekit")) {
+                    Player player = getPlayer(sender, logger);
+                    if (player == null) return false;
                     World world;
-                    Player playerSender;
-
-                    try {
-                        playerSender = (Player) sender;
-                    } catch (ClassCastException e) {
-                        logger.info("Only a player can use savekit!");
-                        e.printStackTrace();
-                        return false;
-                    }
 
                     if (args.length == 2) {//args.length isn't args[x]
-                        world = playerSender.getWorld();
+                        world = player.getWorld();
                     } else if (args.length == 3) {
                         world = sender.getServer().getWorld(args[2]);
                     } else {
@@ -41,15 +39,33 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
                         sender.sendMessage("Wrong number of arguments!");
                         return false;
                     }
-                    return saveKit(playerSender, world);
+                    return saveKit(player, world);
                 } else if (args[0].equalsIgnoreCase("givekit")) {
-                    //something
-                    return true;
+
+                    Player player = getPlayer(sender,logger);
+                    if (player == null) return false;
+                    giveKit(player, SimpleStarterKits.getStarterKit());
                 }
             }
             sender.sendMessage("You do not have permission to use this command.");//place in config
         }
         return false;
+    }
+
+
+    @Nullable
+    private Player getPlayer(CommandSender sender, Logger logger) {
+        World world;
+        Player player;
+
+        try {
+            player = (Player) sender;
+        } catch (ClassCastException e) {
+            logger.info("Only a player can use savekit!");
+            e.printStackTrace();
+            return null;
+        }
+        return player;
     }
 
     private boolean saveKit(Player sender, World world) {
