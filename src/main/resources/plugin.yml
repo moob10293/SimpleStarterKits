@@ -10,4 +10,3 @@ commands:
 permissions:
   simplestarterkits.command:
     description: is able to use the command
-    default: op
