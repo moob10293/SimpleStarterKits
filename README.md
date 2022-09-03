@@ -1,2 +1,2 @@
-# starterkits
-it gives starter kits in minecraft. incomplete(although usable). change the config files to make it work. when completed, type /starterkit set with the starter kit in your inventory to set the starter kit.
+# SimpleStarterKits
+This plugin gives an inventory of items (the "starter kit" in the name) to new players. Type /starterkit set with the desired items in your inventory to set the starter kit.
