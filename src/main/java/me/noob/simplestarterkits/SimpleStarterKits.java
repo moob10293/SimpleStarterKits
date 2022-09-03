@@ -31,7 +31,7 @@ public class SimpleStarterKits extends JavaPlugin {
     }
     private void initStarterKit() {
         try {
-            starterKit = (List<ItemStack>) SimpleStarterKits.getInstance().getKitsConfig().get("StarterKit");
+            starterKit = (List<ItemStack>) kitsConfig.get(config.getString("FirstJoinKit"));
         } catch (ClassCastException e) {
             e.printStackTrace();
             this.getLogger().info("StarterKit in kits.yml could not be cast to an List<ItemStack>!");
@@ -39,6 +39,7 @@ public class SimpleStarterKits extends JavaPlugin {
     }
     @Override
     public void onEnable() {
+        getLogger().info("E");
         instance = this;
         createConfigs();
 
