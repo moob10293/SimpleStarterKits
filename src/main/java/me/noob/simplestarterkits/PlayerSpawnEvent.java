@@ -16,16 +16,16 @@ public class PlayerSpawnEvent implements Listener {
 
     @EventHandler
     public void playerSpawnEvent(PlayerJoinEvent event) {
-        List<Map<?, ?>> mapList = SimpleStarterKits.getInstance().getSettings().getMapList("starterkit");
+        List<ItemStack> firstJoinKit= SimpleStarterKits.getInstance().getStarterKit();
         Player player = event.getPlayer();
         if (!player.hasPlayedBefore()) {
-            for (Map<?,?> map: mapList){
-                giveItem(player, Material.matchMaterial((String) map.get("material")), (int) map.get("amount"));
+            int index = 0;
+            for (ItemStack itemStack: firstJoinKit){
+                if (itemStack != null) {
+                    player.getInventory().setItem(index,itemStack);
+                }
+                index++;
             }
         }
-    }
-
-    private static void giveItem(Player player, Material material, int amount){
-        player.getInventory().addItem(new ItemStack(material,amount));
     }
 }
