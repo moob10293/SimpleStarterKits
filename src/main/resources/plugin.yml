@@ -8,6 +8,6 @@ commands:
     description: The main (and only) command for the SimpleStarterKits plugin. Use /simplestarterkits help for more information
     usage: "Use /<command> help for more info"
 permissions:
-#  all permissions require op unless otherwise written
   simplestarterkits.command:
     description: is able to use the command
+    default: op
