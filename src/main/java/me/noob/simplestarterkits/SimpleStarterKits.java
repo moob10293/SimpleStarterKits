@@ -3,6 +3,7 @@ package me.noob.simplestarterkits;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 public final class SimpleStarterKits extends JavaPlugin {
     @Getter
@@ -23,18 +25,22 @@ public final class SimpleStarterKits extends JavaPlugin {
 
     File kitsFile;
     public void giveKit(Player player, String kit) {
-        PlayerInventory inventory = (PlayerInventory) kitsConfig.get(kit);
-        int index = 0;
-        for (ItemStack itemStack : inventory) {
-            if (itemStack != null) {
-                player.getInventory().setItem(index, itemStack);
-            }
-            index++;
+        Set<String> slots = kitsConfig.getConfigurationSection(kit).getKeys(false);
+        for (String key : slots) {
+            int slot = Integer.parseInt(key);
+            player.getInventory().setItem(slot, kitsConfig.getItemStack(String.format("%1s.%d",kit,slot)));
         }
     }
 
     public void saveKit(@NotNull Player player, String kit){
-        kitsConfig.set(kit,player.getInventory());
+        kitsConfig.set(kit,null);
+        int i = 0;
+        for (ItemStack itemstack : player.getInventory()){
+            if (itemstack !=null){
+                kitsConfig.set(String.format("%1s.%d",kit,i),itemstack);
+            }
+            i++;
+        }
         try {
             kitsConfig.save(kitsFile);
         } catch (IOException e) {
@@ -48,7 +54,6 @@ public final class SimpleStarterKits extends JavaPlugin {
         getLogger().info("Enabling SimpleStarterKits...");
         instance = this;
         createConfigs();
-        initStarterKit();
         getCommand("simplestarterkits").setExecutor(new SimpleStarterKitsCommand());
         getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
 
@@ -59,15 +64,6 @@ public final class SimpleStarterKits extends JavaPlugin {
         kitsFile = new File(getDataFolder(), "kits.yml");
         saveResource("kits.yml", false);
         kitsConfig = YamlConfiguration.loadConfiguration(kitsFile);
-    }
-
-    private void initStarterKit() {
-        try {
-            starterKit = (List<ItemStack>) kitsConfig.get(this.getConfig().getString("first-join-kit"));
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-            this.getLogger().info("Kit 'starter' in kits.yml could not be cast to an List<ItemStack>!");
-        }
     }
 
     @Override
