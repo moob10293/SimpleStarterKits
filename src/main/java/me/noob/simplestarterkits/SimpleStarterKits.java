@@ -4,14 +4,10 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 public final class SimpleStarterKits extends JavaPlugin {
@@ -23,49 +19,30 @@ public final class SimpleStarterKits extends JavaPlugin {
     private static YamlConfiguration kitsConfig;
 
     @Getter
-    private static Logger staticLogger;
+    private static Logger logger;
+
+    private static KitManager kitManager;
 
     @SneakyThrows
-    public static boolean giveKit(Player player, String kit) {
-        if (!kitsConfig.contains(kit)) {
-            return false;
-        }
-        Set<String> slots = kitsConfig.getConfigurationSection(kit).getKeys(false);
-        for (String key : slots) {
-            int slot = Integer.parseInt(key);
-            player.getInventory().setItem(slot, kitsConfig.getItemStack(String.format("%1s.%d", kit, slot)));
-        }
-        return true;
+    public static void giveKit(Player player, String kit) {
+        kitManager.giveKit(player,kit);
     }
 
     public static void saveKit(@NotNull Player player, String kit) {
-        kitsConfig.set(kit, null);
-        int i = 0;
-        for (ItemStack itemstack : player.getInventory()) {
-            if (itemstack != null) {
-                kitsConfig.set(String.format("%1s.%d", kit, i), itemstack);
-            }
-            i++;
-        }
-
-        try {
-            kitsConfig.save(kitsFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-            staticLogger.info("Could not write to 'kits.yml'!");
-        }
+        kitManager.giveKit(player,kit);
     }
 
     @Override
     public void onEnable() {
-        getLogger().info("Enabling SimpleStarterKits.");
-
+        getLogger().info("Enabling SimpleStarterKits...");
         init();
+        getLogger().info("SimpleStarterKits Enabled.");
 
     }
 
     private void init() {
-        staticLogger=this.getLogger();
+        logger = SimpleStarterKits.getLogger();
+        kitManager=new KitManager(logger, kitsFile, kitsConfig);
         initConfigs();
         initCommands();
         initEvents();

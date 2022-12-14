@@ -1,4 +1,4 @@
-starter:
+starter-kit:
   - ==: org.bukkit.inventory.ItemStack
     type: LOG
     damage: 2

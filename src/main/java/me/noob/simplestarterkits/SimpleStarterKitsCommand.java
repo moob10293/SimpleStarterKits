@@ -24,8 +24,10 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         boolean success = false;
         if (args.length > 0) {
             switch (args[0].toLowerCase()) {
-                case "savekit" -> success = saveKit(sender, args);
-                case "givekit" -> success = giveKit(sender, args);
+                case "savekit":
+                    success = saveKit(sender, args);
+                case "givekit":
+                    success = giveKit(sender, args);
             }
         }
         return success;
@@ -43,7 +45,8 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         Player player = (Player) objects[1];
         if (player == null) return false;
 
-        return SimpleStarterKits.giveKit(player, "starter");
+        SimpleStarterKits.giveKit(player, "starter");
+        return true;
     }
 
     private boolean saveKit(@NotNull CommandSender sender, String[] args) {
