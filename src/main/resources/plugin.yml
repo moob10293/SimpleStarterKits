@@ -1,12 +1,17 @@
 name: SimpleStarterKits
 version: ${project.version}
 main: me.noob.simplestarterkits.SimpleStarterKits
-api-version: 1.18
+api-version: 1.19
 description: An easy to use starter kit plugin.
 commands:
   SimpleStarterKits:
     description: The main (and only) command for the SimpleStarterKits plugin. Use /simplestarterkits help for more information
     usage: "Use /<command> help for more info"
 permissions:
-  simplestarterkits.command:
-    description: is able to use the command
+  kits.set:
+    description: can set kits
+  kits.give:
+    description: can give kits
+  kits.reload:
+    description: can reload the plugin
+  #reminder: default default is op

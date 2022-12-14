@@ -22,7 +22,7 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         if (args.length > 0) {
             if (sender.hasPermission("simplestarterkits.command")) {
                 if (args[0].equalsIgnoreCase("savekit")) {
-                    Player player = getPlayer(sender, logger);
+                    Player player = castToPlayer(sender, logger);
                     if (player == null) return false;
                     String kit;
 
@@ -34,11 +34,10 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
                         sender.sendMessage("Wrong number of arguments!");
                         return false;
                     }
-
                     SimpleStarterKits.getInstance().saveKit(player,kit);
                 } else if (args[0].equalsIgnoreCase("givekit")) {
 
-                    Player player = getPlayer(sender, logger);
+                    Player player = castToPlayer(sender, logger);
                     if (player == null) return false;
                     SimpleStarterKits.getInstance().giveKit(player, "starter");
                 }
@@ -52,14 +51,15 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
 
 
     @Nullable
-    private Player getPlayer(CommandSender sender, Logger logger) {
+    private Player castToPlayer(CommandSender sender, Logger logger) {
         World world;
         Player player;
 
         try {
             player = (Player) sender;
         } catch (ClassCastException e) {
-            logger.info("Only a player can use savekit!");
+            logger.info("Only a player can use this command!");
+            sender.sendMessage("Only a player can use this command!");
             e.printStackTrace();
             return null;
         }
