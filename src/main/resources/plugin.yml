@@ -8,7 +8,7 @@ commands:
     description: The main (and only) command for the SimpleStarterKits plugin. Use /simplestarterkits help for more information
     usage: "Use /<command> help for more info"
 permissions:
-  kits.set:
+  kits.save:
     description: can set kits
   kits.give:
     description: can give kits

@@ -1,6 +1,6 @@
 package me.noob.simplestarterkits;
 
-import org.bukkit.World;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,62 +8,93 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.logging.Logger;
+import static org.bukkit.Bukkit.getPlayer;
 
 public class SimpleStarterKitsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        /*uses: savekit [(optional)world], which saves your inventory as the starter kit for the world specified or the one you are in if there is none,
-        givekit [player] [(optional)world], which gives you the kit for the world specified or the one you are in if there is none,
-        reload [config|kits], which reloads the config/kits (NOTE: you do NOT have to use this if you edited the kits using a command,
-        help, which tells you this info, and about, which tells you about this plugin*/
-        Logger logger = SimpleStarterKits.getLogger();
+        /*subcommands:
+        savekit <player> [kit]; saves the player's inventory as the kit specified/the default kit,
+        givekit <player> [kit], gives the player the kit for the kit specified/the default kit,
+        reload [config|kits], reloads configuration/kits (both if not specified),
+        help, returns this info,
+        (no subcommand)/about; tells you about this plugin*/
+
+        boolean success=false;
         if (args.length > 0) {
-            if (sender.hasPermission("simplestarterkits.command")) {
-                if (args[0].equalsIgnoreCase("savekit")) {
-                    Player player = castToPlayer(sender, logger);
-                    if (player == null) return false;
-                    String kit;
-
-                    if (args.length == 1) {//just savekit
-                        kit = "starter";
-                    } else if (args.length == 2) {
-                        kit = args[1];
-                    } else {
-                        sender.sendMessage("Wrong number of arguments!");
-                        return false;
-                    }
-                    SimpleStarterKits.saveKit(player,kit);
-                } else if (args[0].equalsIgnoreCase("givekit")) {
-
-                    Player player = castToPlayer(sender, logger);
-                    if (player == null) return false;
-                    SimpleStarterKits.giveKit(player, "starter");
-                }
-            }else {
-                sender.sendMessage("You do not have permission to use this command.");//place in config
-                return false;
+            switch (args[0].toLowerCase()) {
+                case "savekit" -> success = saveKit(sender, args);
+                case "givekit" -> success = giveKit(sender, args);
             }
         }
+        return success;
+    }
+
+    private boolean giveKit(@NotNull CommandSender sender,String[] args) {
+        if (!sender.hasPermission("kits.give")) {
+            sender.sendMessage("You do not have permission to use this command.");//place in config
+            return false;
+        }
+
+        Object[] objects = getPlayerAndKit(sender,args);
+        if (objects == null) return false;
+        String kit=(String) objects[0];
+        Player player=(Player) objects[1];
+        if (player == null) return false;
+
+        return SimpleStarterKits.giveKit(player, "starter");
+    }
+
+    private boolean saveKit(@NotNull CommandSender sender,String[] args) {
+        if (!sender.hasPermission("kits.save")) {
+            sender.sendMessage("You do not have permission to use this command.");//place in config
+            return false;
+        }
+
+        Object[] objects = getPlayerAndKit(sender,args);
+        if (objects == null) return false;
+        String kit=(String) objects[0];
+        Player player=(Player) objects[1];
+        if (player == null) return false;
+
+        SimpleStarterKits.saveKit(player,kit);
         return true;
     }
 
-
-    @Nullable
-    private Player castToPlayer(CommandSender sender, Logger logger) {
-        World world;
-        Player player;
-
-        try {
-            player = (Player) sender;
-        } catch (ClassCastException e) {
-            logger.info("Only a player can use this command!");
-            sender.sendMessage("Only a player can use this command!");
-            e.printStackTrace();
-            return null;
+    private Object @Nullable [] getPlayerAndKit(CommandSender sender, String @NotNull [] args){
+        String kit;
+        Player player = getPlayerFromArg(sender, args[2]);
+        switch (args.length) {
+            case 2 ->//just player
+                    kit = "starter";
+            case 3 -> kit = args[2];
+            case default -> {
+                sender.sendMessage("Wrong number of arguments!");
+                return null;
+            }
         }
-        return player;
+        return new Object[]{kit, player};
+
+    }
+
+    private Player getPlayerFromArg(CommandSender sender, @NotNull String playerArg) {
+        if (playerArg.equals("@s")) {
+            return castToPlayer(sender);
+        } else {
+            return getPlayer(playerArg);
+        }
+
+    }
+
+    private @Nullable Player castToPlayer(CommandSender sender) {
+        if (sender instanceof Player){
+            return (Player) sender;
+        } else{
+            sender.sendMessage("Only a player can use this command!");
+            return null;
+
+        }
     }
 }
 
