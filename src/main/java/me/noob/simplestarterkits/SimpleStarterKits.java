@@ -62,16 +62,29 @@ public final class SimpleStarterKits extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        logger=getLogger();
-        logger.info("Enabling SimpleStarterKits");
+        getLogger().info("Enabling SimpleStarterKits");
 
-        createConfigs();
-        getCommand("simplestarterkits").setExecutor(new SimpleStarterKitsCommand());
-        getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
+        init();
 
     }
 
-    private void createConfigs() {
+    private void init() {
+        logger=getLogger();
+        initConfigs();
+        initCommands();
+        initEvents();
+    }
+
+    private void initEvents() {
+        getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
+    }
+
+    @SneakyThrows
+    private void initCommands() {
+        getCommand("simplestarterkits").setExecutor(new SimpleStarterKitsCommand());
+    }
+
+    private void initConfigs() {
         saveDefaultConfig();
         kitsFile = new File(getDataFolder(), "kits.yml");
         saveResource("kits.yml", false);
