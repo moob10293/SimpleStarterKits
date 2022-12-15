@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -31,23 +30,23 @@ public final class SimpleStarterKits extends JavaPlugin {
 
     @SneakyThrows
     public static boolean giveKit(Player player, String kit) {
-        if (!kitsConfig.contains(kit)){
+        if (!kitsConfig.contains(kit)) {
             return false;
         }
         Set<String> slots = kitsConfig.getConfigurationSection(kit).getKeys(false);
         for (String key : slots) {
             int slot = Integer.parseInt(key);
-            player.getInventory().setItem(slot, kitsConfig.getItemStack(String.format("%1s.%d",kit,slot)));
+            player.getInventory().setItem(slot, kitsConfig.getItemStack(String.format("%1s.%d", kit, slot)));
         }
         return true;
     }
 
-    public static void saveKit(@NotNull Player player, String kit){
-        kitsConfig.set(kit,null);
+    public static void saveKit(@NotNull Player player, String kit) {
+        kitsConfig.set(kit, null);
         int i = 0;
-        for (ItemStack itemstack : player.getInventory()){
-            if (itemstack !=null){
-                kitsConfig.set(String.format("%1s.%d",kit,i),itemstack);
+        for (ItemStack itemstack : player.getInventory()) {
+            if (itemstack != null) {
+                kitsConfig.set(String.format("%1s.%d", kit, i), itemstack);
             }
             i++;
         }
@@ -69,7 +68,7 @@ public final class SimpleStarterKits extends JavaPlugin {
     }
 
     private void init() {
-        logger=getLogger();
+        logger = getLogger();
         initConfigs();
         initCommands();
         initEvents();

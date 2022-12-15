@@ -21,7 +21,7 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         help, returns this info,
         (no subcommand)/about; tells you about this plugin*/
 
-        boolean success=false;
+        boolean success = false;
         if (args.length > 0) {
             switch (args[0].toLowerCase()) {
                 case "savekit" -> success = saveKit(sender, args);
@@ -31,38 +31,38 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         return success;
     }
 
-    private boolean giveKit(@NotNull CommandSender sender,String[] args) {
+    private boolean giveKit(@NotNull CommandSender sender, String[] args) {
         if (!sender.hasPermission("kits.give")) {
             sender.sendMessage("You do not have permission to use this command.");//place in config
             return false;
         }
 
-        Object[] objects = getPlayerAndKit(sender,args);
+        Object[] objects = getPlayerAndKit(sender, args);
         if (objects == null) return false;
-        String kit=(String) objects[0];
-        Player player=(Player) objects[1];
+        String kit = (String) objects[0];
+        Player player = (Player) objects[1];
         if (player == null) return false;
 
         return SimpleStarterKits.giveKit(player, "starter");
     }
 
-    private boolean saveKit(@NotNull CommandSender sender,String[] args) {
+    private boolean saveKit(@NotNull CommandSender sender, String[] args) {
         if (!sender.hasPermission("kits.save")) {
             sender.sendMessage("You do not have permission to use this command.");//place in config
             return false;
         }
 
-        Object[] objects = getPlayerAndKit(sender,args);
+        Object[] objects = getPlayerAndKit(sender, args);
         if (objects == null) return false;
-        String kit=(String) objects[0];
-        Player player=(Player) objects[1];
+        String kit = (String) objects[0];
+        Player player = (Player) objects[1];
         if (player == null) return false;
 
-        SimpleStarterKits.saveKit(player,kit);
+        SimpleStarterKits.saveKit(player, kit);
         return true;
     }
 
-    private Object @Nullable [] getPlayerAndKit(CommandSender sender, String @NotNull [] args){
+    private Object @Nullable [] getPlayerAndKit(CommandSender sender, String @NotNull [] args) {
         String kit;
         Player player = getPlayerFromArg(sender, args[2]);
         switch (args.length) {
@@ -88,9 +88,9 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
     }
 
     private @Nullable Player castToPlayer(CommandSender sender) {
-        if (sender instanceof Player){
+        if (sender instanceof Player) {
             return (Player) sender;
-        } else{
+        } else {
             sender.sendMessage("Only a player can use this command!");
             return null;
 
