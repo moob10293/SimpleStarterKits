@@ -18,7 +18,7 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         givekit [player] [(optional)world], which gives you the kit for the world specified or the one you are in if there is none,
         reload [config|kits], which reloads the config/kits (NOTE: you do NOT have to use this if you edited the kits using a command,
         help, which tells you this info, and about, which tells you about this plugin*/
-        Logger logger = SimpleStarterKits.getInstance().getLogger();
+        Logger logger = SimpleStarterKits.getLogger();
         if (args.length > 0) {
             if (sender.hasPermission("simplestarterkits.command")) {
                 if (args[0].equalsIgnoreCase("savekit")) {
@@ -34,12 +34,12 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
                         sender.sendMessage("Wrong number of arguments!");
                         return false;
                     }
-                    SimpleStarterKits.getInstance().saveKit(player,kit);
+                    SimpleStarterKits.saveKit(player,kit);
                 } else if (args[0].equalsIgnoreCase("givekit")) {
 
                     Player player = castToPlayer(sender, logger);
                     if (player == null) return false;
-                    SimpleStarterKits.getInstance().giveKit(player, "starter");
+                    SimpleStarterKits.giveKit(player, "starter");
                 }
             }else {
                 sender.sendMessage("You do not have permission to use this command.");//place in config

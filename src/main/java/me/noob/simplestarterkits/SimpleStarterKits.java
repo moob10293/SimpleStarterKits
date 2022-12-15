@@ -14,17 +14,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public final class SimpleStarterKits extends JavaPlugin {
-    @Getter
-    private static SimpleStarterKits instance;
-    @Getter
-    private List<ItemStack> starterKit;
-    @Getter
-    private YamlConfiguration kitsConfig;
 
-    File kitsFile;
-    public void giveKit(Player player, String kit) {
+    @Getter
+    private static List<ItemStack> starterKit;
+
+    @Getter
+    private static YamlConfiguration kitsConfig;
+
+    @Getter
+    private static Logger logger;
+
+    @Getter
+    private static File kitsFile;
+
+    public static void giveKit(Player player, String kit) {
         Set<String> slots = kitsConfig.getConfigurationSection(kit).getKeys(false);
         for (String key : slots) {
             int slot = Integer.parseInt(key);
@@ -32,7 +38,7 @@ public final class SimpleStarterKits extends JavaPlugin {
         }
     }
 
-    public void saveKit(@NotNull Player player, String kit){
+    public static void saveKit(@NotNull Player player, String kit){
         kitsConfig.set(kit,null);
         int i = 0;
         for (ItemStack itemstack : player.getInventory()){
@@ -41,18 +47,20 @@ public final class SimpleStarterKits extends JavaPlugin {
             }
             i++;
         }
+
         try {
             kitsConfig.save(kitsFile);
         } catch (IOException e) {
             e.printStackTrace();
-            getLogger().info("File 'kits.yml' could not be written to!");
+            logger.info("File 'kits.yml' could not be written to!");
         }
     }
 
     @Override
     public void onEnable() {
-        getLogger().info("Enabling SimpleStarterKits...");
-        instance = this;
+        logger=getLogger();
+        logger.info("Enabling SimpleStarterKits");
+
         createConfigs();
         getCommand("simplestarterkits").setExecutor(new SimpleStarterKitsCommand());
         getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
