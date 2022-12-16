@@ -17,16 +17,13 @@ import java.util.logging.Logger;
 public final class SimpleStarterKits extends JavaPlugin {
 
     @Getter
-    private static List<ItemStack> starterKit;
+    private static File kitsFile;
 
     @Getter
     private static YamlConfiguration kitsConfig;
 
     @Getter
-    private static Logger logger;
-
-    @Getter
-    private static File kitsFile;
+    private static Logger staticLogger;
 
     @SneakyThrows
     public static boolean giveKit(Player player, String kit) {
@@ -55,20 +52,20 @@ public final class SimpleStarterKits extends JavaPlugin {
             kitsConfig.save(kitsFile);
         } catch (IOException e) {
             e.printStackTrace();
-            logger.info("File 'kits.yml' could not be written to!");
+            staticLogger.info("Could not write to 'kits.yml'!");
         }
     }
 
     @Override
     public void onEnable() {
-        getLogger().info("Enabling SimpleStarterKits");
+        getLogger().info("Enabling SimpleStarterKits.");
 
         init();
 
     }
 
     private void init() {
-        logger = getLogger();
+        staticLogger=this.getLogger();
         initConfigs();
         initCommands();
         initEvents();
