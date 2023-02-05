@@ -1,6 +1,5 @@
 package me.noob.simplestarterkits;
 
-import lombok.SneakyThrows;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -8,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 public final class SimpleStarterKits extends JavaPlugin {
 
     private static SimpleStarterKits instance;
-
     private static KitManager kitManager;
 
     public static void giveKit(Player player) {
@@ -19,7 +17,7 @@ public final class SimpleStarterKits extends JavaPlugin {
         kitManager.giveKit(player);
     }
 
-    public static void reload(){
+    public static void reload() {
         instance.saveDefaultConfig();
         kitManager.reload();
     }
@@ -33,20 +31,11 @@ public final class SimpleStarterKits extends JavaPlugin {
     }
 
     private void init() {
-        instance=this;
         saveDefaultConfig();
-        initCommands();
-        initEvents();
+        instance = this;
         kitManager = new KitManager(getLogger(), this);
-    }
-
-    private void initEvents() {
-        getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
-    }
-
-    @SneakyThrows
-    private void initCommands() {
         getCommand("SimpleStarterKits").setExecutor(new SimpleStarterKitsCommand());
+        getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
     }
 
     @Override

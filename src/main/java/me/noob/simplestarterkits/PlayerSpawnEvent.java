@@ -7,7 +7,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerSpawnEvent implements Listener {
 
-
     @EventHandler
     public void playerSpawnEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();

@@ -25,9 +25,9 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
             switch (args[0].toLowerCase()) {
                 case "givekit" -> giveKit(sender, args[1]);
                 case "savekit" -> saveKit(sender, args[1]);
-                case "reload" -> saveKit(sender, args[1]);
-                case "help" -> saveKit(sender, args[1]);
-                case default -> success=false;
+                case "reload" -> reload(sender);
+                case "help" -> help(sender);
+                case default -> success = false;
             }
         }
         return success;
@@ -46,6 +46,7 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         }
 
         SimpleStarterKits.giveKit(player);
+        sender.sendMessage("§aSuccessfully gave " + playerName + " a starter kit.");//green
     }
 
     private void saveKit(CommandSender sender, String playerName) {
@@ -61,6 +62,7 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         }
 
         SimpleStarterKits.saveKit(player);
+        sender.sendMessage("§aSuccessfully saved " + playerName + "'s inventory as the starter kit.");//green
     }
 
     private void reload(CommandSender sender) {
