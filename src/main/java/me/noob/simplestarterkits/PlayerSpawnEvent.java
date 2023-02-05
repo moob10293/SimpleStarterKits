@@ -11,7 +11,7 @@ public class PlayerSpawnEvent implements Listener {
     @EventHandler
     public void playerSpawnEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (player.hasPlayedBefore()) {
+        if (!player.hasPlayedBefore()) {
             SimpleStarterKits.giveKit(player);
         }
     }

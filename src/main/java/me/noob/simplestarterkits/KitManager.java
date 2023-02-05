@@ -12,14 +12,18 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class KitManager {
-    private final File file;
-    private final YamlConfiguration starterKit;
-    private final Logger logger;
 
-    KitManager(Logger logger, File file, YamlConfiguration starterKit) {
+    private final SimpleStarterKits plugin;
+    private final File file;
+    private final Logger logger;
+    private YamlConfiguration starterKit;
+
+    KitManager(Logger logger, SimpleStarterKits plugin) {
         this.logger = logger;
-        this.file = file;
-        this.starterKit = starterKit;
+        this.plugin = plugin;
+        file = new File(plugin.getDataFolder(), "kits.yml");
+        plugin.saveResource("kits.yml", false);
+        starterKit = YamlConfiguration.loadConfiguration(file);
     }
 
     @SneakyThrows
@@ -47,5 +51,10 @@ public class KitManager {
             e.printStackTrace();
             logger.info("Could not write to 'kits.yml'!");
         }
+    }
+
+    public void reload() {
+        plugin.saveResource("kits.yml", false);
+        starterKit = YamlConfiguration.loadConfiguration(file);
     }
 }
