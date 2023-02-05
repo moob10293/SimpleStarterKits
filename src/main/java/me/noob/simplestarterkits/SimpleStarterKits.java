@@ -24,12 +24,12 @@ public final class SimpleStarterKits extends JavaPlugin {
     private static KitManager kitManager;
 
     @SneakyThrows
-    public static void giveKit(Player player, String kit) {
-        kitManager.giveKit(player,kit);
+    public static void giveKit(Player player) {
+        kitManager.giveKit(player);
     }
 
-    public static void saveKit(@NotNull Player player, String kit) {
-        kitManager.giveKit(player,kit);
+    public static void saveKit(@NotNull Player player) {
+        kitManager.giveKit(player);
     }
 
     @Override
@@ -42,7 +42,7 @@ public final class SimpleStarterKits extends JavaPlugin {
 
     private void init() {
         logger = SimpleStarterKits.getLogger();
-        kitManager=new KitManager(logger, kitsFile, kitsConfig);
+        kitManager = new KitManager(logger, kitsFile, kitsConfig);
         initConfigs();
         initCommands();
         initEvents();

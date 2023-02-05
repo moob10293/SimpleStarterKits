@@ -6,7 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static org.bukkit.Bukkit.getPlayer;
 
@@ -15,89 +14,50 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         /*subcommands:
-        savekit <player> [kit]; saves the player's inventory as the kit specified/the default kit,
-        givekit <player> [kit], gives the player the kit for the kit specified/the default kit,
-        reload [config|kits], reloads configuration/kits (both if not specified),
-        help, returns this info,
-        (no subcommand)/about; tells you about this plugin*/
+        save <player>, saves the player's inventory as the starter kit,
+        give <player>, gives the player the starter kit,
+        reload, reloads the config files,
+        help, tells you this info,
+        (no subcommand)/about; tells you about this plugin (creator, version, etc.)*/
 
-        boolean success = false;
+        boolean success = true;
         if (args.length > 0) {
             switch (args[0].toLowerCase()) {
-                case "savekit":
-                    success = saveKit(sender, args);
-                case "givekit":
-                    success = giveKit(sender, args);
+                case "give" -> giveKit(sender, args[1]);
+                case "save" -> saveKit(sender, args[1]);
             }
         }
         return success;
     }
 
-    private boolean giveKit(@NotNull CommandSender sender, String[] args) {
+    private void giveKit(@NotNull CommandSender sender, String playerName) {
         if (!sender.hasPermission("kits.give")) {
-            sender.sendMessage("You do not have permission to use this command.");//place in config
-            return false;
+            sender.sendMessage("§c§lYou do not have permission to use this subcommand!");//place in config; red, bold
+            return;
         }
 
-        Object[] objects = getPlayerAndKit(sender, args);
-        if (objects == null) return false;
-        String kit = (String) objects[0];
-        Player player = (Player) objects[1];
-        if (player == null) return false;
+        Player player = getPlayer(playerName);
+        if (player == null) {
+            sender.sendMessage("§cCould not find player '" + playerName + "'.");//red
+            return;
+        }
 
-        SimpleStarterKits.giveKit(player, "starter");
-        return true;
+        SimpleStarterKits.giveKit(player);
     }
 
-    private boolean saveKit(@NotNull CommandSender sender, String[] args) {
+    private void saveKit(CommandSender sender, String playerName) {
         if (!sender.hasPermission("kits.save")) {
-            sender.sendMessage("You do not have permission to use this command.");//place in config
-            return false;
+            sender.sendMessage("§c§lYou do not have permission to use this subcommand!");//place in config
+            return;
         }
 
-        Object[] objects = getPlayerAndKit(sender, args);
-        if (objects == null) return false;
-        String kit = (String) objects[0];
-        Player player = (Player) objects[1];
-        if (player == null) return false;
-
-        SimpleStarterKits.saveKit(player, kit);
-        return true;
-    }
-
-    private Object @Nullable [] getPlayerAndKit(CommandSender sender, String @NotNull [] args) {
-        String kit;
-        Player player = getPlayerFromArg(sender, args[2]);
-        switch (args.length) {
-            case 2 ->//just player
-                    kit = "starter";
-            case 3 -> kit = args[2];
-            case default -> {
-                sender.sendMessage("Wrong number of arguments!");
-                return null;
-            }
-        }
-        return new Object[]{kit, player};
-
-    }
-
-    private Player getPlayerFromArg(CommandSender sender, @NotNull String playerArg) {
-        if (playerArg.equals("@s")) {
-            return castToPlayer(sender);
-        } else {
-            return getPlayer(playerArg);
+        Player player = getPlayer(playerName);
+        if (player == null) {
+            sender.sendMessage("§cCould not find player '" + playerName + "'.");//red
+            return;
         }
 
-    }
-
-    private @Nullable Player castToPlayer(CommandSender sender) {
-        if (sender instanceof Player) {
-            return (Player) sender;
-        } else {
-            sender.sendMessage("Only a player can use this command!");
-            return null;
-
-        }
+        SimpleStarterKits.saveKit(player);
     }
 }
 

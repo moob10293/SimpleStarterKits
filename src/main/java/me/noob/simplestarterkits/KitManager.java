@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public class KitManager {
@@ -17,22 +16,22 @@ public class KitManager {
     private final YamlConfiguration starterKit;
     private final Logger logger;
 
-    KitManager(Logger logger,File file,YamlConfiguration starterKit){
-        this.logger =logger;
-        this.file =file;
-        this.starterKit =starterKit;
+    KitManager(Logger logger, File file, YamlConfiguration starterKit) {
+        this.logger = logger;
+        this.file = file;
+        this.starterKit = starterKit;
     }
 
     @SneakyThrows
-    public void giveKit(Player player, String kit) {
-        PlayerInventory inventory = (PlayerInventory) starterKit.get(kit);
-        if (inventory==null){
-            logger.info("Could not get inventory from 'kits.yml'!");
+    public void giveKit(Player player) {
+        PlayerInventory starterKit = (PlayerInventory) this.starterKit.get("starter-kit");
+        if (starterKit == null) {
+            logger.info("Could not get starter kit from 'kits.yml'!");
             return;
         }
 
         int index = 0;
-        for (ItemStack itemStack : inventory) {
+        for (ItemStack itemStack : starterKit) {
             if (itemStack != null) {
                 player.getInventory().setItem(index, itemStack);
             }
@@ -40,8 +39,8 @@ public class KitManager {
         }
     }
 
-    public void saveKit(@NotNull Player player, String kit) {
-        starterKit.set(kit,player.getInventory());
+    public void saveKit(@NotNull Player player) {
+        starterKit.set("starter-kit", player.getInventory());
         try {
             starterKit.save(file);
         } catch (IOException e) {
