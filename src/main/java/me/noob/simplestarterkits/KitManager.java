@@ -1,8 +1,10 @@
 package me.noob.simplestarterkits;
 
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +29,7 @@ public class KitManager {
     }
 
     @SneakyThrows
-    public void giveKit(Player player) {
+    public void give(Player player) {
         PlayerInventory starterKit = (PlayerInventory) this.starterKit.get("starter-kit");
         if (starterKit == null) {
             logger.info("Could not get starter kit from 'kits.yml'!");
@@ -43,7 +45,7 @@ public class KitManager {
         }
     }
 
-    public void saveKit(@NotNull Player player) {
+    public void set(@NotNull Player player) {
         starterKit.set("starter-kit", player.getInventory());
         try {
             starterKit.save(file);

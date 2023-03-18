@@ -1,20 +1,22 @@
 package me.noob.simplestarterkits;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 public final class SimpleStarterKits extends JavaPlugin {
-
     private static SimpleStarterKits instance;
     private static KitManager kitManager;
 
     public static void giveKit(Player player) {
-        kitManager.giveKit(player);
+        kitManager.give(player);
     }
-
-    public static void saveKit(@NotNull Player player) {
-        kitManager.giveKit(player);
+    @SuppressWarnings("unused")
+    public static void setKit(Player player) {
+        kitManager.set(player);
+    }
+    public static void clearKit() {
+        kitManager.clear();
     }
 
     public static void reload() {
@@ -30,11 +32,14 @@ public final class SimpleStarterKits extends JavaPlugin {
 
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private void init() {
         saveDefaultConfig();
         instance = this;
         kitManager = new KitManager(getLogger(), this);
-        getCommand("SimpleStarterKits").setExecutor(new SimpleStarterKitsCommand());
+        PluginCommand command = getCommand("SimpleStarterKits");
+        command.setExecutor(new SimpleStarterKitsCommand());
+        command.setTabCompleter(new TabCompleter());
         getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
     }
 
