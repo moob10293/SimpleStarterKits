@@ -74,8 +74,9 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         }
     }
 
-        SimpleStarterKits.saveKit(player);
-        sender.sendMessage("§aSuccessfully saved " + playerName + "'s inventory as the starter kit.");//green
+    private void clear(CommandSender sender) {
+        SimpleStarterKits.clearKit();
+        sender.sendMessage("§aSuccessfully cleared the starter kit!");//green
     }
 
     private void reload(CommandSender sender) {

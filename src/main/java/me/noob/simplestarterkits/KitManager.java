@@ -55,6 +55,16 @@ public class KitManager {
         }
     }
 
+    public void clear() {
+        starterKit.set("starter-kit", Bukkit.createInventory(null, InventoryType.PLAYER));
+        try {
+            starterKit.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.info("Could not write to 'kits.yml'!");
+        }
+    }
+
     public void reload() {
         plugin.saveResource("kits.yml", false);
         starterKit = YamlConfiguration.loadConfiguration(file);
