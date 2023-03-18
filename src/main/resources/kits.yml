@@ -1,41 +1,115 @@
-starter-kit:
-
-
-
-
-
-#example starter kit:
-#  - ==: org.bukkit.inventory.ItemStack
-#    type: LOG
-#    damage: 2
-#  - null
-#  - ==: org.bukkit.inventory.ItemStack
-#    type: STONE
-#    damage: 1
-#  - null
-#  - ==: org.bukkit.inventory.ItemStack
-#    type: LAPIS_BLOCK
-#  - null
-#  - null
-#  - null
-#  - null
-#  - null
-#  - ==: org.bukkit.inventory.ItemStack
-#    type: STONE
-#  - null
-#  - null
-#  - null
-#  - null
-#  - null
-#  - null
-#  - null
-#  - null
-#  - null
-#  - null
-#  - ==: org.bukkit.inventory.ItemStack
-#    type: WOOD
-#  - null
-#  - null
-#  - null
-#  - null
-#  - null
+starter-kit: !!org.bukkit.craftbukkit.v1_19_R1.inventory.CraftInventoryPlayer
+  armorContents:
+    - null
+    - null
+    - null
+    - null
+  boots: null
+  bootsDropChance: 1.0
+  chestplate: null
+  chestplateDropChance: 1.0
+  contents:
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+  extraContents:
+    - null
+  heldItemSlot: 1
+  helmet: null
+  helmetDropChance: 1.0
+  itemInHand:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3120
+    type: AIR
+    amount: 0
+  itemInHandDropChance: 1.0
+  itemInMainHand:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3120
+    type: AIR
+    amount: 0
+  itemInMainHandDropChance: 1.0
+  itemInOffHand:
+    ==: org.bukkit.inventory.ItemStack
+    v: 3120
+    type: AIR
+    amount: 0
+  itemInOffHandDropChance: 1.0
+  leggings: null
+  leggingsDropChance: 1.0
+  maxStackSize: 64
+  storageContents:
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
