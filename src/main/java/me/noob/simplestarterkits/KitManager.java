@@ -15,29 +15,31 @@ import java.util.logging.Logger;
 
 public class KitManager {
 
-    private final SimpleStarterKits plugin;
     private final File file;
     private final Logger logger;
-    private YamlConfiguration starterKit;
+    private YamlConfiguration kitConfig;
 
-    KitManager(Logger logger, SimpleStarterKits plugin) {
+    KitManager(Logger logger, @NotNull SimpleStarterKits plugin) {
         this.logger = logger;
-        this.plugin = plugin;
         file = new File(plugin.getDataFolder(), "kits.yml");
         plugin.saveResource("kits.yml", false);
-        starterKit = YamlConfiguration.loadConfiguration(file);
+        kitConfig = YamlConfiguration.loadConfiguration(file);
     }
 
     @SneakyThrows
     public void give(Player player) {
-        PlayerInventory starterKit = (PlayerInventory) this.starterKit.get("starter-kit");
-        if (starterKit == null) {
+        if (!kitConfig.isSet("starter-kit")) {
+            logger.info("The starter kit is not set!");
+            return;
+        }
+        PlayerInventory starterInventory = this.kitConfig.getObject("starter-kit", PlayerInventory.class);
+        if (starterInventory == null) {
             logger.info("Could not get starter kit from 'kits.yml'!");
             return;
         }
 
         int index = 0;
-        for (ItemStack itemStack : starterKit) {
+        for (ItemStack itemStack : starterInventory) {
             if (itemStack != null) {
                 player.getInventory().setItem(index, itemStack);
             }
@@ -46,9 +48,9 @@ public class KitManager {
     }
 
     public void set(@NotNull Player player) {
-        starterKit.set("starter-kit", player.getInventory());
+        kitConfig.set("starter-kit", player.getInventory());
         try {
-            starterKit.save(file);
+            kitConfig.save(file);
         } catch (IOException e) {
             e.printStackTrace();
             logger.info("Could not write to 'kits.yml'!");
@@ -56,9 +58,9 @@ public class KitManager {
     }
 
     public void clear() {
-        starterKit.set("starter-kit", Bukkit.createInventory(null, InventoryType.PLAYER));
+        kitConfig.set("starter-kit", Bukkit.createInventory(null, InventoryType.PLAYER));
         try {
-            starterKit.save(file);
+            kitConfig.save(file);
         } catch (IOException e) {
             e.printStackTrace();
             logger.info("Could not write to 'kits.yml'!");
@@ -66,7 +68,6 @@ public class KitManager {
     }
 
     public void reload() {
-        plugin.saveResource("kits.yml", false);
-        starterKit = YamlConfiguration.loadConfiguration(file);
+        kitConfig = YamlConfiguration.loadConfiguration(file);
     }
 }

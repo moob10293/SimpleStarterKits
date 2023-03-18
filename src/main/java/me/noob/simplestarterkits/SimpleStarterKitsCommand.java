@@ -24,12 +24,12 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
         (no subcommand)/help, tells you this info,
         about; tells you about this plugin (creator, version, etc.)*/
 
-        if (args.length == 0){
+        if (args.length == 0) {
             help(sender);
             return true;
         }
 
-        if (args.length >2){
+        if (args.length > 2) {
             return false;
         }
 
@@ -46,10 +46,10 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
     }
 
     @SneakyThrows
-    private void giveSet(CommandSender sender, String giveSet, String[] args){
+    private void giveSet(CommandSender sender, String giveSet, String[] args) {
         String playerName;
         Player player;
-        if (args.length==2){
+        if (args.length == 2) {
             playerName = args[1];
             player = getPlayer(playerName);
             if (player == null) {
@@ -57,16 +57,16 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
                 return;
             }
         } else {
-            if (sender instanceof Player){
+            if (sender instanceof Player) {
                 playerName = sender.getName();
-                player=(Player) sender;
+                player = (Player) sender;
             } else {
-                sender.sendMessage("§c"+sender.getName()+" is not a player!");//red
+                sender.sendMessage("§c" + sender.getName() + " is not a player!");//red
                 return;
             }
         }
-        Method method = SimpleStarterKits.class.getMethod(giveSet+"Kit",Player.class);
-        method.invoke(null,player);
+        Method method = SimpleStarterKits.class.getMethod(giveSet + "Kit", Player.class);
+        method.invoke(null, player);
         if (giveSet.equals("set")) {
             sender.sendMessage("§aSuccessfully saved " + playerName + "'s inventory as the starter kit!");//green
         } else {
