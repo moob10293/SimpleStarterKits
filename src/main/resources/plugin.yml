@@ -8,11 +8,9 @@ commands:
   SimpleStarterKits:
     description: The main (and only) command for the SimpleStarterKits plugin. Use /simplestarterkits help for more information
     aliases: ssk
-    usage: "Usage: /<command> [help|reload|save|give|about]"
+    permission: simplestarterkits.command
+    permission-message: You do not have permission to use this command.
+    usage: "Usage: /<command> [help|reload|set|give|about|clear]\nUse /<command> help for more information"
 permissions:
-  simplestarterkits.save:
-    description: can set kits
-  simplestarterkits.give:
-    description: can give kits
-  simplestarterkits.reload:
-    description: can reload the plugin
+  simplestarterkits.command:
+    description: allows usage of command
