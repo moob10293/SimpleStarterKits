@@ -104,26 +104,31 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
     }
 
     private void help(@NotNull CommandSender sender) {
+        sender.sendMessage("");
         sender.sendMessage("§e§lUsage:");
         sender.sendMessage("§e/simplestarterkits [help|reload|set|give|about|clear]");
         sender.sendMessage("§eYou can also use /ssk instead of /simplestarterkits");
         sender.sendMessage("");
         sender.sendMessage("§e§lSubcommands:");
-        sender.sendMessage("§eset [player], saves the player's inventory as the starter kit, or your own if you don't specify the player");
-        sender.sendMessage("§egive [player], gives the player the starter kit, or you if you don't specify the player");
-        sender.sendMessage("§eclear, removes the starter kit aka sets the kit to nothing");
-        sender.sendMessage("§ereload, reloads the config files (saves changes made to them, if)");
+        sender.sendMessage("§eset [player]: saves the player's/your inventory as the starter kit (choosing a player is optional)");
+        sender.sendMessage("§egive [player]: gives the player/yourself the starter kit");
+        sender.sendMessage("§eclear, removes the starter kit, aka sets the kit to nothing)");
+        sender.sendMessage("§ereload, reloads the config files (saves changes made to them)");
         sender.sendMessage("§eabout; tells you about this plugin (creator, version, etc.)");
         sender.sendMessage("§ehelp, tells you this info. It is also the default subcommand (if you don't put any subcommand)");
+        sender.sendMessage("");
     }
 
     private void about(@NotNull CommandSender sender) {
+        sender.sendMessage("");
         sender.sendMessage("§e§lSimple Starter Kits");//yellow bold
         sender.sendMessage("§0------------------------------------------------------");//black
+        sender.sendMessage("");
         sender.sendMessage("§eAuthor: Noob10293");
-        sender.sendMessage("§eDiscord: ");
-        sender.sendMessage("§eWebsite: ");
+        sender.sendMessage("§eDiscord: bla bla");
+        sender.sendMessage("§eWebsite: bla bla");
         sender.sendMessage("§aThis is the about command. For the help command, use \"/simplestarterkits help\"");
+        sender.sendMessage("");
     }
 }
 

@@ -29,11 +29,15 @@ public final class SimpleStarterKits extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         saveResource("kits.yml", false);
+
         kitManager = new KitManager(getLogger(), this);
+
         getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
+
         PluginCommand command = getCommand("SimpleStarterKits");
         command.setExecutor(new SimpleStarterKitsCommand());
         command.setTabCompleter(new TabCompleter());
+
         getLogger().info("SimpleStarterKits Enabled.");
 
     }
