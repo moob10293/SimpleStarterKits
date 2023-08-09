@@ -16,10 +16,10 @@ public class ConfigurationManager {
     protected final String fileName;
     protected YamlConfiguration config;
 
-    ConfigurationManager(@NotNull JavaPlugin plugin, String fileName) {
+    public ConfigurationManager(String fileName, @NotNull JavaPlugin plugin) {
+        this.fileName = fileName;
         this.plugin = plugin;
         this.logger = plugin.getLogger();
-        this.fileName = fileName;
         file = new File(plugin.getDataFolder(), fileName);
         reload();
     }
@@ -32,16 +32,28 @@ public class ConfigurationManager {
      * Wrapper for config.getObject that gives error messages
      **/
     public <T> T get(String path, Class<T> clazz) {
-        if (!config.isSet(path)) {
-            logger.warning("Path '" + path + "' in file " + fileName + " is not set!");
-            return null;
-        }
+        if (pathNotSet(path)) return null;
+
         T object = this.config.getObject(path, clazz);
+
         if (object == null) {
             logger.warning("Path '" + path + "' in file " + fileName + " is not a '" + clazz.getSimpleName() + "'!");
-            return null;
         }
+
         return object;
+    }
+
+    /**
+     * Logs a warning message if there is nothing at the path
+     * @param path The path to the object
+     * @return A boolean indicating if there is anything in the config where the path points
+     */
+    protected boolean pathNotSet(String path) {
+        if (!config.isSet(path)) {
+            logger.warning("Path '" + path + "' in file " + fileName + " is not set!");
+            return true;
+        }
+        return false;
     }
 
     public void set(String path, Object value) {
@@ -53,14 +65,10 @@ public class ConfigurationManager {
      * get config from file
      **/
     public void reload() {
-        verifyFileExistence();
-        config = YamlConfiguration.loadConfiguration(file);
-    }
-
-    protected void verifyFileExistence() {
         if (!file.exists()) {
             plugin.saveResource(fileName, false);
         }
+        config = YamlConfiguration.loadConfiguration(file);
     }
 
     protected void saveToFile() {

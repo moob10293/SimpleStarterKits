@@ -56,8 +56,8 @@ public final class SimpleStarterKits extends JavaPlugin {
     }
 
     private void initConfigs() {
-        configManager = new ConfigurationManager(this, "config.yml");
-        kitManager = new KitManager(this, "kits.yml");
-        playerManager = new PlayerManager(this, "played_before.yml");
+        configManager = new ConfigurationManager("config.yml", this);
+        kitManager = new KitManager("kits.yml", this);
+        playerManager = new PlayerManager("played_before.yml", this);
     }
 }

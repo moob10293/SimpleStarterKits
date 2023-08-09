@@ -10,8 +10,8 @@ public class PlayerManager extends ConfigurationManager {
 
     private List<String> playedBefore;
 
-    PlayerManager(JavaPlugin plugin, String fileName) {
-        super(plugin, fileName);
+    PlayerManager(String fileName, JavaPlugin plugin) {
+        super(fileName, plugin);
     }
 
     public boolean isNew(@NotNull Player player) {
@@ -24,13 +24,11 @@ public class PlayerManager extends ConfigurationManager {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void reload() {
         super.reload();
-        try {
-            playedBefore = (List<String>) get("played-before", List.class);
-        } catch (ClassCastException e) {
-            logger.warning("Path 'played-before' in file played_before.yml is not a list of players!");
+        if (pathNotSet("played-before")){
+            return;
         }
+        playedBefore = config.getStringList("played-before");
     }
 }
