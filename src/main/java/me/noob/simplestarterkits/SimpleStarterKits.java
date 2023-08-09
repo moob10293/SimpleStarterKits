@@ -9,11 +9,13 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.logging.Logger;
+
 public final class SimpleStarterKits extends JavaPlugin {
 
     private static KitManager kitManager;
     @Getter
-    private static SimpleStarterKits instance;
+    private static Logger staticLogger;
     @Getter
     private static PlayerManager playerManager;
     @Getter
@@ -41,7 +43,7 @@ public final class SimpleStarterKits extends JavaPlugin {
     @Override
     @SuppressWarnings("DataFlowIssue")
     public void onEnable() {
-        instance = this;
+        staticLogger = this.getLogger();
         initConfigs();
 
         getServer().getPluginManager().registerEvents(new PlayerSpawnEvent(), this);
@@ -50,8 +52,7 @@ public final class SimpleStarterKits extends JavaPlugin {
         command.setExecutor(new SimpleStarterKitsCommand());
         command.setTabCompleter(new TabCompleter());
 
-        getLogger().info("SimpleStarterKits Enabled.");
-
+        staticLogger.info("SimpleStarterKits Enabled.");
     }
 
     private void initConfigs() {

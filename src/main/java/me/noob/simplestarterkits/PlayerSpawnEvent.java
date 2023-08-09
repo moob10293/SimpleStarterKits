@@ -15,6 +15,7 @@ public class PlayerSpawnEvent implements Listener {
         ConfigurationManager pluginConfig = SimpleStarterKits.getConfigManager();
 
         playerManager.addPlayer(player);
+
         if (!pluginConfig.get("give", Boolean.class)) {
             return;
         }
@@ -29,7 +30,7 @@ public class PlayerSpawnEvent implements Listener {
                 SimpleStarterKits.giveKit(player);
             }
         } else {
-            SimpleStarterKits.getInstance().getLogger().warning("Path 'new' in file config.yml can only be 'server' or 'plugin'!");
+            SimpleStarterKits.getStaticLogger().warning("Path 'new' in file config.yml can only be 'server' or 'plugin'!");
         }
     }
 }
