@@ -1,14 +1,13 @@
 #Some minimal settings (You don't have to edit them)
 
-
 #Give kits to new players? (true,false)
 give: true
 
 #What the starter kit is saved under in kits.yml
 starter-kit-name: "starter-kit"
 
-#Message if the player already has items in their inventory
-conflict-message: "You received a starter kit, but you already had items in your inventory! The conflicting items were dropped."
+#Message if the player already has items in the inventory slot
+conflict-message: "§cYou received a starter kit, but you already had items in your inventory! The conflicting items were dropped."#red
 
 #Are new players ones not seen before by the server or the plugin? (server,plugin)
 #For example, a player who played on the server before the plugin was installed would not have been seen before by the plugin

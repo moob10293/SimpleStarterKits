@@ -1,12 +1,12 @@
 name: SimpleStarterKits
 version: ${project.version}
 main: me.noob.simplestarterkits.SimpleStarterKits
-api-version: 1.19
+api-version: 1.20
 description: An easy to use starter kit plugin.
 #add website here
 commands:
   SimpleStarterKits:
-    description: The main (and only) command for the SimpleStarterKits plugin. Use /simplestarterkits help for more information
+    description: The main command for the SimpleStarterKits plugin. Use /simplestarterkits help for more information
     aliases: ssk
     permission: simplestarterkits.command
     permission-message: "§cYou do not have permission to use this command."#red

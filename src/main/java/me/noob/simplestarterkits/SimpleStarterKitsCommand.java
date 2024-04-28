@@ -73,9 +73,8 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
 
     @SneakyThrows
     private void giveSet(CommandSender sender, String giveSet) {
-        if (sender instanceof Player) {
+        if (sender instanceof Player player) {
             String playerName = sender.getName();
-            Player player = (Player) sender;
             giveSet(sender, giveSet, player, playerName);
         } else {
             sender.sendMessage("§c" + sender.getName() + " is not a player!");//red
@@ -122,7 +121,7 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
     private void about(@NotNull CommandSender sender) {
         sender.sendMessage("");
         sender.sendMessage("§e§lSimple Starter Kits");//yellow bold
-        sender.sendMessage("§0------------------------------------------------------");//black
+        sender.sendMessage("§f------------------------------------------------------");//white
         sender.sendMessage("");
         sender.sendMessage("§eAuthor: Noob10293");
         sender.sendMessage("§eDiscord: bla bla");

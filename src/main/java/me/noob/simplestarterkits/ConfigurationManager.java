@@ -34,7 +34,7 @@ public class ConfigurationManager {
     public <T> T get(String path, Class<T> clazz) {
         if (pathNotSet(path)) return null;
 
-        T object = this.config.getObject(path, clazz);
+        T object = config.getObject(path, clazz);
 
         if (object == null) {
             logger.warning("Path '" + path + "' in file " + fileName + " is not a '" + clazz.getSimpleName() + "'!");
