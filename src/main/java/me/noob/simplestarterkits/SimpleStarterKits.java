@@ -17,7 +17,7 @@ public final class SimpleStarterKits extends JavaPlugin {
     @Getter
     private static Logger staticLogger;
     @Getter
-    private static PlayerManager playerManager;
+    private static PlayedBeforeManager playedBeforeManager;
     @Getter
     private static ConfigurationManager configManager;
 
@@ -37,11 +37,11 @@ public final class SimpleStarterKits extends JavaPlugin {
     public static void reload() {
         kitManager.reload();
         configManager.reload();
-        playerManager.reload();
+        playedBeforeManager.reload();
     }
 
     @Override
-    @SuppressWarnings("DataFlowIssue")
+    @SuppressWarnings("DataFlowIssue") // for command.setexecutor
     public void onEnable() {
         staticLogger = this.getLogger();
         initConfigs();
@@ -58,6 +58,6 @@ public final class SimpleStarterKits extends JavaPlugin {
     private void initConfigs() {
         configManager = new ConfigurationManager("config.yml", this);
         kitManager = new KitManager("kits.yml", this);
-        playerManager = new PlayerManager("played_before.yml", this);
+        playedBeforeManager = new PlayedBeforeManager("played_before.yml", this);
     }
 }

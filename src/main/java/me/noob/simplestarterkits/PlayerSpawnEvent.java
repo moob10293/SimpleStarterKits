@@ -11,10 +11,10 @@ public class PlayerSpawnEvent implements Listener {
     @EventHandler
     public void playerSpawnEvent(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        PlayerManager playerManager = SimpleStarterKits.getPlayerManager();
+        PlayedBeforeManager playedBeforeManager = SimpleStarterKits.getPlayedBeforeManager();
         ConfigurationManager pluginConfig = SimpleStarterKits.getConfigManager();
 
-        playerManager.addPlayer(player);
+        if (playedBeforeManager.isNew(player)) playedBeforeManager.addPlayer(player);
 
         if (!pluginConfig.get("give", Boolean.class)) {
             return;
@@ -26,11 +26,11 @@ public class PlayerSpawnEvent implements Listener {
                 SimpleStarterKits.giveKit(player);
             }
         } else if (newIs.equals("plugin")) {
-            if (playerManager.isNew(player)) {
+            if (playedBeforeManager.isNew(player)) {
                 SimpleStarterKits.giveKit(player);
             }
         } else {
-            SimpleStarterKits.getStaticLogger().warning("Path 'new' in file config.yml can only be 'server' or 'plugin'!");
+            SimpleStarterKits.getStaticLogger().warning("Path 'new' in file config.yml can only be \"server\" or \"plugin\"!");
         }
     }
 }

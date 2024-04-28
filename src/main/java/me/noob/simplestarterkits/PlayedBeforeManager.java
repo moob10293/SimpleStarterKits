@@ -4,13 +4,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerManager extends ConfigurationManager {
+public class PlayedBeforeManager extends ConfigurationManager {
 
-    private List<String> playedBefore;
+    private List<String> playedBefore = new ArrayList<>();
 
-    PlayerManager(String fileName, JavaPlugin plugin) {
+    PlayedBeforeManager(String fileName, JavaPlugin plugin) {
         super(fileName, plugin);
     }
 
@@ -27,6 +28,8 @@ public class PlayerManager extends ConfigurationManager {
     public void reload() {
         super.reload();
         if (pathNotSet("played-before")){
+            logger.warning("Setting played-before to an empty list!");
+            set("played-before", playedBefore);
             return;
         }
         playedBefore = config.getStringList("played-before");
