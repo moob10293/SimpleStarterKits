@@ -26,6 +26,7 @@ public final class SimpleStarterKits extends JavaPlugin {
     }
 
     @SuppressWarnings("unused")
+//    used by comprehension
     public static void setKit(@NotNull Player player) {
         kitManager.setStarterKit(player.getInventory());
     }

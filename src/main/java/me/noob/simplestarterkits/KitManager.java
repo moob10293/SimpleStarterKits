@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
+//todo: changing starterkit to a list
 public class KitManager extends ConfigurationManager {
 
     private ConfigurationManager pluginConfig;

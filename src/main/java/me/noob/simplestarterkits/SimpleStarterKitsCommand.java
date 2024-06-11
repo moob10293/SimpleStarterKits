@@ -12,6 +12,7 @@ import java.lang.reflect.Method;
 
 import static org.bukkit.Bukkit.getPlayer;
 
+//todo: refactor command to use reflection
 public class SimpleStarterKitsCommand implements CommandExecutor {
 
     @Override
@@ -103,31 +104,28 @@ public class SimpleStarterKitsCommand implements CommandExecutor {
     }
 
     private void help(@NotNull CommandSender sender) {
+        sender.sendMessage("§aAlias: /ssk");
         sender.sendMessage("");
-        sender.sendMessage("§e§lUsage:");
-        sender.sendMessage("§e/simplestarterkits [help|reload|set|give|about|clear]");
-        sender.sendMessage("§eYou can also use /ssk instead of /simplestarterkits");
+        sender.sendMessage("§a§lUsage:");//green
+        sender.sendMessage("§e/simplestarterkits [help|reload|set|give|about|clear]");//yellow
         sender.sendMessage("");
-        sender.sendMessage("§e§lSubcommands:");
-        sender.sendMessage("§eset [player]: saves the player's/your inventory as the starter kit (choosing a player is optional)");
-        sender.sendMessage("§egive [player]: gives the player/yourself the starter kit");
-        sender.sendMessage("§eclear, removes the starter kit, aka sets the kit to nothing)");
-        sender.sendMessage("§ereload, reloads the config files (saves changes made to them)");
-        sender.sendMessage("§eabout; tells you about this plugin (creator, version, etc.)");
-        sender.sendMessage("§ehelp, tells you this info. It is also the default subcommand (if you don't put any subcommand)");
-        sender.sendMessage("");
+        sender.sendMessage("§a§lSubcommands:");//green
+        sender.sendMessage("- §eset [player]: Saves your inventory as the starter kit, or a player's, if you provide one.");
+        sender.sendMessage("- §egive [player]: Gives the player/yourself the starter kit.");
+        sender.sendMessage("- §eclear: Sets the starter kit to an empty inventory.");
+        sender.sendMessage("- §ereload: Reloads the configuration files.");
+        sender.sendMessage("- §eabout: Displays information about this plugin.");
+        sender.sendMessage("- §ehelp: Displays information on how to use this plugin. Default command.");
     }
 
     private void about(@NotNull CommandSender sender) {
-        sender.sendMessage("");
         sender.sendMessage("§e§lSimple Starter Kits");//yellow bold
-        sender.sendMessage("§f------------------------------------------------------");//white
+        sender.sendMessage("§f-----------------------------------------------------");//white
         sender.sendMessage("");
         sender.sendMessage("§eAuthor: Noob10293");
         sender.sendMessage("§eDiscord: bla bla");
         sender.sendMessage("§eWebsite: bla bla");
         sender.sendMessage("§aThis is the about command. For the help command, use \"/simplestarterkits help\"");
-        sender.sendMessage("");
     }
 }
 

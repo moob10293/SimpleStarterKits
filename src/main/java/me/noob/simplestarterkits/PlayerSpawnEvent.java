@@ -10,6 +10,7 @@ public class PlayerSpawnEvent implements Listener {
 
     @EventHandler
     public void playerSpawnEvent(@NotNull PlayerJoinEvent event) {
+        //todo: figure out what's causing this to not work
         Player player = event.getPlayer();
         PlayedBeforeManager playedBeforeManager = SimpleStarterKits.getPlayedBeforeManager();
         ConfigurationManager pluginConfig = SimpleStarterKits.getConfigManager();
@@ -17,6 +18,8 @@ public class PlayerSpawnEvent implements Listener {
         if (playedBeforeManager.isNew(player)) playedBeforeManager.addPlayer(player);
 
         if (!pluginConfig.get("give", Boolean.class)) {
+            //debug
+            SimpleStarterKits.getStaticLogger().info("not giving");
             return;
         }
 
